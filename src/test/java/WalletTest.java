@@ -17,4 +17,10 @@ class WalletTest {
         Wallet wallet = new Wallet();
         assertEquals(0.0, wallet.value());
     }
+
+    @Test
+    void givenWalletContainsSingleStockWhenRateOfStockIsOneThenValueShouldBeOne() {
+        Wallet wallet = new Wallet(new Stock(1, "STOCKWITHVALUEONE"));
+        assertEquals(1.0, wallet.value());
+    }
 }
