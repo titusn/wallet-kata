@@ -1,7 +1,6 @@
 import com.titusnachbauer.wallet.Stock;
 import com.titusnachbauer.wallet.TickerSymbolNotFound;
 import com.titusnachbauer.wallet.Wallet;
-import kotlin.collections.ArrayDeque;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -93,4 +92,5 @@ class WalletTest {
         wallet.add(new Stock(3, "STOCKWITHVALUETWO"));
         assertEquals(0, wallet.getQuantity("THISISNOTINTHEWALLET"));
     }
+
 }
