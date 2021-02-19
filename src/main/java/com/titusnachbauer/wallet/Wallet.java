@@ -35,4 +35,13 @@ public class Wallet {
     public void add(Stock stock) {
         stocks.add(stock);
     }
+
+    public int getQuantity(String stocktype) {
+        for (Stock stock: stocks) {
+            if (stock.getSymbol().equals(stocktype)) {
+                return stock.getQuantity();
+            }
+        }
+        return 0;
+    }
 }

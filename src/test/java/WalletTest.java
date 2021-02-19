@@ -70,4 +70,12 @@ class WalletTest {
         wallet.add(new Stock(1, "UNKNOWNSTOCK"));
         assertThrows(TickerSymbolNotFound.class, wallet::value);
     }
+
+    @Test
+    void givenWalletContainsStocksShouldShowQuantityPerStocktype() {
+        Wallet wallet = new Wallet();
+        wallet.add(new Stock(2, "STOCKWITHVALUEONE"));
+        wallet.add(new Stock(3, "STOCKWITHVALUETWO"));
+        assertEquals(2, wallet.getQuantity("STOCKWITHVALUEONE"));
+    }
 }
