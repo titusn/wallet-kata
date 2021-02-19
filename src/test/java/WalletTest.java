@@ -1,4 +1,5 @@
 import com.titusnachbauer.wallet.Stock;
+import com.titusnachbauer.wallet.TickerSymbolNotFound;
 import com.titusnachbauer.wallet.Wallet;
 import kotlin.collections.ArrayDeque;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class WalletTest {
     @Test
@@ -57,5 +59,15 @@ class WalletTest {
         Wallet wallet = new Wallet(stocks);
         wallet.add(new Stock(1, "STOCKWITHVALUETHREE"));
         assertEquals(6.0, wallet.value());
+    }
+
+    @Test
+    void givenUnknownSymbolWhenCalculatingValueThenShouldThrowTickerSymbolNotFound(){
+        Wallet wallet = new Wallet();
+        wallet.add(new Stock(1, "STOCKWITHVALUEONE"));
+        wallet.add(new Stock(1, "STOCKWITHVALUETWO"));
+        wallet.add(new Stock(1, "STOCKWITHVALUETHREE"));
+        wallet.add(new Stock(1, "UNKNOWNSTOCK"));
+        assertThrows(TickerSymbolNotFound.class, wallet::value);
     }
 }

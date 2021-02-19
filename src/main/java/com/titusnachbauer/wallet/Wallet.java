@@ -17,6 +17,9 @@ public class Wallet {
         this.stocks.add(stock);
     }
 
+    public Wallet() {
+    }
+
     public double value() {
         return computeValue();
     }
