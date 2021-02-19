@@ -32,8 +32,13 @@ public class Wallet {
         return value;
     }
 
-    public void add(Stock stock) {
-        stocks.add(stock);
+    public void add(Stock newStock) {
+        for (Stock currentStock: stocks) {
+            if (currentStock.getSymbol().equals(newStock.getSymbol())) {
+                currentStock.addQuantity(newStock.getQuantity());
+            }
+        }
+        stocks.add(newStock);
     }
 
     public int getQuantity(String stocktype) {

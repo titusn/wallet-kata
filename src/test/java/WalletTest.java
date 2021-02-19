@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class WalletTest {
+    private Wallet wallet = new Wallet();
+
     @Test
     void givenNewStockItShouldHaveQuantityAndStockType() {
         Stock stock = new Stock(4, "AAPL");
@@ -63,7 +65,6 @@ class WalletTest {
 
     @Test
     void givenUnknownSymbolWhenCalculatingValueThenShouldThrowTickerSymbolNotFound(){
-        Wallet wallet = new Wallet();
         wallet.add(new Stock(1, "STOCKWITHVALUEONE"));
         wallet.add(new Stock(1, "STOCKWITHVALUETWO"));
         wallet.add(new Stock(1, "STOCKWITHVALUETHREE"));
@@ -73,9 +74,23 @@ class WalletTest {
 
     @Test
     void givenWalletContainsStocksShouldShowQuantityPerStocktype() {
-        Wallet wallet = new Wallet();
         wallet.add(new Stock(2, "STOCKWITHVALUEONE"));
         wallet.add(new Stock(3, "STOCKWITHVALUETWO"));
         assertEquals(2, wallet.getQuantity("STOCKWITHVALUEONE"));
+    }
+
+    @Test
+    void givenWalletContainsStocksWhenExistingStocktypeIsAddedQuantityShouldIncrease() {
+        wallet.add(new Stock(2, "STOCKWITHVALUEONE"));
+        wallet.add(new Stock(3, "STOCKWITHVALUETWO"));
+        wallet.add(new Stock(3, "STOCKWITHVALUETWO"));
+        assertEquals(6, wallet.getQuantity("STOCKWITHVALUETWO"));
+    }
+
+    @Test
+    void givenWalletDoesNotContainStocktypeThenQuantityShouldBeZero() {
+        wallet.add(new Stock(2, "STOCKWITHVALUEONE"));
+        wallet.add(new Stock(3, "STOCKWITHVALUETWO"));
+        assertEquals(0, wallet.getQuantity("THISISNOTINTHEWALLET"));
     }
 }
