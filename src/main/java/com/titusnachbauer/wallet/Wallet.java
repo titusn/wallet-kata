@@ -1,25 +1,31 @@
 package com.titusnachbauer.wallet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Wallet {
-    private final Stock stock;
+    private List<Stock> stocks = new ArrayList<>();
+    private RateProvider rateProvider = new RateProvider();
 
-    public Wallet() {
-        this.stock = null;
-    }
-
-    public Wallet(Stock stock) {
-        this.stock = stock;
-    }
-
-    public double value() {
-        if (stock == null) {
-            return 0.0;
-        } else {
-            return computeValue();
+    public Wallet(List<Stock> stocks) {
+        if (stocks != null) {
+            this.stocks = stocks;
         }
     }
 
+    public Wallet(Stock stock) {
+        this.stocks.add(stock);
+    }
+
+    public double value() {
+        return computeValue();
+    }
+
     private double computeValue() {
-        return 1.0;
+        double value = 0.0;
+        for (Stock stock: stocks) {
+            value += stock.getQuantity() * rateProvider.getRate(stock);
+        }
+        return value;
     }
 }
