@@ -1,20 +1,27 @@
 package com.titusnachbauer.wallet;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Wallet {
-    private List<Stock> stocks = new ArrayList<>();
+    private Map<String, Integer> stocks = new HashMap<>();
     private RateProvider rateProvider = new RateProvider();
 
     public Wallet(List<Stock> stocks) {
         if (stocks != null) {
-            this.stocks = stocks;
+            for (Stock stock: stocks) {
+                Integer currentQuantity;
+                currentQuantity = this.stocks.putIfAbsent(stock.getSymbol(), stock.getQuantity());
+                if (currentQuantity != null) {
+                    this.stocks.put(stock.getSymbol(), stock.getQuantity() + currentQuantity);
+                }
+            }
         }
     }
 
     public Wallet(Stock stock) {
-        this.stocks.add(stock);
+        this.stocks.put(stock.getSymbol(), stock.getQuantity());
     }
 
     public Wallet() {
@@ -25,28 +32,37 @@ public class Wallet {
     }
 
     private double computeValue() {
-        double value = 0.0;
-        for (Stock stock: stocks) {
-            value += stock.getQuantity() * rateProvider.getRate(stock);
-        }
-        return value;
+        return stocks.entrySet()
+                .stream()
+                .parallel()
+                .mapToDouble(
+                        this::getValueForStock)
+                .sum();
+
     }
 
-    public void add(Stock newStock) {
-        for (Stock currentStock: stocks) {
-            if (currentStock.getSymbol().equals(newStock.getSymbol())) {
-                currentStock.addQuantity(newStock.getQuantity());
-            }
+    public void add(Stock stock) {
+        Integer currentQuantity;
+        currentQuantity = this.stocks.putIfAbsent(stock.getSymbol(), stock.getQuantity());
+        if (currentQuantity != null) {
+            this.stocks.put(stock.getSymbol(), stock.getQuantity() + currentQuantity);
         }
-        stocks.add(newStock);
     }
 
     public int getQuantity(String stocktype) {
-        for (Stock stock: stocks) {
-            if (stock.getSymbol().equals(stocktype)) {
-                return stock.getQuantity();
-            }
+        int quantity = 0;
+        if (stocks.containsKey(stocktype)) {
+            quantity = stocks.get(stocktype);
         }
-        return 0;
+        return quantity;
+    }
+
+    private double getValueForStock(Map.Entry<String, Integer> e) {
+        return rateProvider.getRate(
+                new Stock(
+                        e.getValue(),
+                        e.getKey()
+                ))
+                * e.getValue();
     }
 }
