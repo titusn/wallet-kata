@@ -28,4 +28,8 @@ public class Wallet {
         }
         return value;
     }
+
+    public void add(Stock stock) {
+        stocks.add(stock);
+    }
 }

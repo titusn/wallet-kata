@@ -48,4 +48,14 @@ class WalletTest {
         Wallet wallet = new Wallet(stocks);
         assertEquals(3.0, wallet.value());
     }
+
+    @Test
+    void givenWalletContainsStocksWhenStockIsAddedThenValueShouldIncrease() {
+        List<Stock> stocks = new ArrayList<>();
+        stocks.add(new Stock(1, "STOCKWITHVALUEONE"));
+        stocks.add(new Stock(1, "STOCKWITHVALUETWO"));
+        Wallet wallet = new Wallet(stocks);
+        wallet.add(new Stock(1, "STOCKWITHVALUETHREE"));
+        assertEquals(6.0, wallet.value());
+    }
 }
