@@ -1,6 +1,6 @@
 package com.titusnachbauer.wallet;
 
-public class RateProvider {
+public class MockRateProvider {
     public double getRate(Stock stock) {
         switch (stock.getSymbol()) {
             case "STOCKWITHVALUEONE":
