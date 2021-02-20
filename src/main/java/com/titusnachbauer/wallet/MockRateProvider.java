@@ -1,6 +1,7 @@
 package com.titusnachbauer.wallet;
 
-public class MockRateProvider {
+public class MockRateProvider implements RateProvider {
+    @Override
     public double getRate(Stock stock) {
         switch (stock.getSymbol()) {
             case "STOCKWITHVALUEONE":

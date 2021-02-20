@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Wallet {
     private final Map<String, Integer> stocks = new HashMap<>();
-    private final MockRateProvider rateProvider = new MockRateProvider();
+    private final RateProvider rateProvider = new MockRateProvider();
 
     public Wallet(List<Stock> stocks) {
          for (Stock stock: stocks) {
