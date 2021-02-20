@@ -6,19 +6,22 @@ import java.util.Map;
 
 public class Wallet {
     private final Map<String, Integer> stocks = new HashMap<>();
-    private final RateProvider rateProvider = new MockRateProvider();
+    private final RateProvider rateProvider;
 
-    public Wallet(List<Stock> stocks) {
-         for (Stock stock: stocks) {
+    public Wallet(List<Stock> stocks, RateProvider rateProvider) {
+        this(rateProvider);
+        for (Stock stock: stocks) {
              this.stocks.put(stock.getSymbol(), stock.getQuantity());
          }
     }
 
-    public Wallet(Stock stock) {
+    public Wallet(Stock stock, RateProvider rateProvider) {
+        this(rateProvider);
         this.stocks.put(stock.getSymbol(), stock.getQuantity());
     }
 
-    public Wallet() {
+    public Wallet(RateProvider rateProvider) {
+        this.rateProvider = rateProvider;
     }
 
     public double computeValue() {

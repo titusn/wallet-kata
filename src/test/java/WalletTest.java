@@ -1,6 +1,4 @@
-import com.titusnachbauer.wallet.Stock;
-import com.titusnachbauer.wallet.TickerSymbolNotFound;
-import com.titusnachbauer.wallet.Wallet;
+import com.titusnachbauer.wallet.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class WalletTest {
-    private Wallet wallet = new Wallet();
+    private RateProvider mockRateProvider = new MockRateProvider();
+    private Wallet wallet = new Wallet(mockRateProvider);
 
     @Test
     void givenNewStockItShouldHaveQuantityAndStockType() {
@@ -21,25 +20,25 @@ class WalletTest {
 
     @Test
     void givenNewWalletWhenEmptyThenValueShouldBeZero() {
-        Wallet wallet = new Wallet(new ArrayList<>());
+        Wallet wallet = new Wallet(new ArrayList<>(), mockRateProvider);
         assertEquals(0.0, wallet.computeValue());
     }
 
     @Test
     void givenWalletContainsSingleStockWhenRateOfStockIsOneThenValueShouldBeOne() {
-        Wallet wallet = new Wallet(new Stock(1, "STOCKWITHVALUEONE"));
+        Wallet wallet = new Wallet(new Stock(1, "STOCKWITHVALUEONE"), mockRateProvider);
         assertEquals(1.0, wallet.computeValue());
     }
 
     @Test
     void givenWalletContainsSingleStockWhenRateOfStockIsTwoThenValueShouldBeTwo() {
-        Wallet wallet = new Wallet(new Stock(1, "STOCKWITHVALUETWO"));
+        Wallet wallet = new Wallet(new Stock(1, "STOCKWITHVALUETWO"), mockRateProvider);
         assertEquals(2.0, wallet.computeValue());
     }
 
     @Test
     void givenWalletContainsTwoStocksWhenRateOfStockIsTwoThenValueShouldBeFour() {
-        Wallet wallet = new Wallet(new Stock(2, "STOCKWITHVALUETWO"));
+        Wallet wallet = new Wallet(new Stock(2, "STOCKWITHVALUETWO"), mockRateProvider);
         assertEquals(4.0, wallet.computeValue());
     }
 
@@ -48,7 +47,7 @@ class WalletTest {
         List<Stock> stocks = new ArrayList<>();
         stocks.add(new Stock(1, "STOCKWITHVALUEONE"));
         stocks.add(new Stock(1, "STOCKWITHVALUETWO"));
-        Wallet wallet = new Wallet(stocks);
+        Wallet wallet = new Wallet(stocks, mockRateProvider);
         assertEquals(3.0, wallet.computeValue());
     }
 
@@ -57,7 +56,7 @@ class WalletTest {
         List<Stock> stocks = new ArrayList<>();
         stocks.add(new Stock(1, "STOCKWITHVALUEONE"));
         stocks.add(new Stock(1, "STOCKWITHVALUETWO"));
-        Wallet wallet = new Wallet(stocks);
+        Wallet wallet = new Wallet(stocks, mockRateProvider);
         wallet.add(new Stock(1, "STOCKWITHVALUETHREE"));
         assertEquals(6.0, wallet.computeValue());
     }
