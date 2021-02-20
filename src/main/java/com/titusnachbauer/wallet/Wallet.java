@@ -21,11 +21,7 @@ public class Wallet {
     public Wallet() {
     }
 
-    public double value() {
-        return computeValue();
-    }
-
-    private double computeValue() {
+    public double computeValue() {
         return stocks.entrySet()
                 .stream()
                 .parallel()

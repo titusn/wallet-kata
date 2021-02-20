@@ -22,25 +22,25 @@ class WalletTest {
     @Test
     void givenNewWalletWhenEmptyThenValueShouldBeZero() {
         Wallet wallet = new Wallet(new ArrayList<>());
-        assertEquals(0.0, wallet.value());
+        assertEquals(0.0, wallet.computeValue());
     }
 
     @Test
     void givenWalletContainsSingleStockWhenRateOfStockIsOneThenValueShouldBeOne() {
         Wallet wallet = new Wallet(new Stock(1, "STOCKWITHVALUEONE"));
-        assertEquals(1.0, wallet.value());
+        assertEquals(1.0, wallet.computeValue());
     }
 
     @Test
     void givenWalletContainsSingleStockWhenRateOfStockIsTwoThenValueShouldBeTwo() {
         Wallet wallet = new Wallet(new Stock(1, "STOCKWITHVALUETWO"));
-        assertEquals(2.0, wallet.value());
+        assertEquals(2.0, wallet.computeValue());
     }
 
     @Test
     void givenWalletContainsTwoStocksWhenRateOfStockIsTwoThenValueShouldBeFour() {
         Wallet wallet = new Wallet(new Stock(2, "STOCKWITHVALUETWO"));
-        assertEquals(4.0, wallet.value());
+        assertEquals(4.0, wallet.computeValue());
     }
 
     @Test
@@ -49,7 +49,7 @@ class WalletTest {
         stocks.add(new Stock(1, "STOCKWITHVALUEONE"));
         stocks.add(new Stock(1, "STOCKWITHVALUETWO"));
         Wallet wallet = new Wallet(stocks);
-        assertEquals(3.0, wallet.value());
+        assertEquals(3.0, wallet.computeValue());
     }
 
     @Test
@@ -59,7 +59,7 @@ class WalletTest {
         stocks.add(new Stock(1, "STOCKWITHVALUETWO"));
         Wallet wallet = new Wallet(stocks);
         wallet.add(new Stock(1, "STOCKWITHVALUETHREE"));
-        assertEquals(6.0, wallet.value());
+        assertEquals(6.0, wallet.computeValue());
     }
 
     @Test
@@ -68,7 +68,7 @@ class WalletTest {
         wallet.add(new Stock(1, "STOCKWITHVALUETWO"));
         wallet.add(new Stock(1, "STOCKWITHVALUETHREE"));
         wallet.add(new Stock(1, "UNKNOWNSTOCK"));
-        assertThrows(TickerSymbolNotFound.class, wallet::value);
+        assertThrows(TickerSymbolNotFound.class, wallet::computeValue);
     }
 
     @Test
