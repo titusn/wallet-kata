@@ -2,7 +2,7 @@ package com.titusnachbauer.service;
 
 import com.google.gson.annotations.SerializedName;
 
-public class QuoteDto {
+public class QuoteDto implements Dto{
     @SerializedName("symbol")
     private final String symbol;
 

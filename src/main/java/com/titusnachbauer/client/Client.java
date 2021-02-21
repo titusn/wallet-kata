@@ -1,7 +1,7 @@
 package com.titusnachbauer.client;
 
+import com.titusnachbauer.service.Dto;
 import com.titusnachbauer.service.QuoteDto;
-import org.jetbrains.annotations.Nullable;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -24,27 +24,16 @@ public class Client {
     }
 
     public QuoteDto getQuote(String symbol) throws IOException {
-        try {
-            Response<QuoteDto> response = iexService.getQuote(symbol, publishToken).execute();
-            return getResponseBody(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
+        Response<QuoteDto> response = iexService.getQuote(symbol, publishToken).execute();
+        return getResponseBody(response);
     }
 
     public StatusDto getAPIStatus() throws IOException {
-        try {
-            Response<StatusDto> response = iexService.getAPIStatus().execute();
-            return getResponseBody(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
+        Response<StatusDto> response = iexService.getAPIStatus().execute();
+        return getResponseBody(response);
     }
 
-    @Nullable
-    private <T> T getResponseBody(Response<T> response) throws IOException {
+    private <T extends Dto> T getResponseBody(Response<T> response) throws IOException {
         if (response.code() == HTTP_OK) {
             return response.body();
         } else {

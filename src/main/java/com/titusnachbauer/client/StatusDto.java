@@ -1,8 +1,9 @@
 package com.titusnachbauer.client;
 
 import com.google.gson.annotations.SerializedName;
+import com.titusnachbauer.service.Dto;
 
-public class StatusDto {
+public class StatusDto implements Dto {
     @SerializedName("status")
     private final String status;
 
