@@ -11,7 +11,7 @@ public class MockRateProvider implements RateProvider {
             case "STOCKWITHVALUETHREE":
                 return 3.0;
             default:
-                throw new TickerSymbolNotFound();
+                throw new TickerSymbolNotFound(stock.getSymbol());
         }
     }
 }

@@ -28,7 +28,7 @@ public class IEXRateProvider implements RateProvider{
             quote = client.getQuote(stock.getSymbol());
         } catch (IOException e) {
             if (e.getMessage().endsWith("404")) {
-                throw new TickerSymbolNotFound();
+                throw new TickerSymbolNotFound(stock.getSymbol());
             } else {
                 e.printStackTrace();
             }
