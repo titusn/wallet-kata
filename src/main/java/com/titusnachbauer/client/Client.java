@@ -47,4 +47,23 @@ public class Client {
             throw e;
         }
     }
+
+    public StatusDto getAPIStatus() throws IOException {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IEXService iexService = retrofit.create(IEXService.class);
+        try {
+            retrofit2.Response<StatusDto> response = iexService.getAPIStatus().execute();
+            if (response.code() == HTTP_STATUS_OK) {
+                return response.body();
+            } else {
+                throw new IOException("Server responded " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }

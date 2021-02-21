@@ -20,7 +20,7 @@ class APIClientTest {
 
     @Test
     void givenStatusURLThenClientResponseShouldBeOK() throws Exception {
-        Assertions.assertEquals(Client.HTTP_STATUS_OK, client.getRequest(new URL(Client.BASE_URL +"/status")).code());
+        Assertions.assertEquals("up", client.getAPIStatus().getStatus());
     }
 
     @Test
