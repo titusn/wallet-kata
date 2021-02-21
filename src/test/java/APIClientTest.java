@@ -24,16 +24,6 @@ class APIClientTest {
     }
 
     @Test
-    void givenStatusURLThenClientResponseShouldBeJSON() throws Exception {
-        String contentType = Objects.requireNonNull(
-                Objects.requireNonNull(
-                client.getRequest(new URL(Client.BASE_URL + "/status")).body())
-                .contentType())
-                .toString();
-        Assertions.assertEquals("application/json; charset=utf-8", contentType);
-    }
-
-    @Test
     void givenExistingSymbolClientShouldReturnQuote() throws Exception {
         QuoteDto quote = client.getQuote("AAPL");
         Assertions.assertNotNull(quote);
