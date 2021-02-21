@@ -5,6 +5,7 @@ import com.titusnachbauer.service.QuoteDto;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Currency;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -34,5 +35,10 @@ public class IEXRateProvider implements RateProvider{
             }
         }
         return Objects.requireNonNull(quote).getLatestPrice();
+    }
+
+    @Override
+    public double getRateIn(Currency currency, Stock stock) {
+        throw new NotImplementedException();
     }
 }

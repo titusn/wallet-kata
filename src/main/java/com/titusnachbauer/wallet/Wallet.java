@@ -1,5 +1,6 @@
 package com.titusnachbauer.wallet;
 
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,6 @@ public class Wallet {
                 .mapToDouble(
                         this::getValueForStock)
                 .sum();
-
     }
 
     private double getValueForStock(Map.Entry<String, Integer> e) {
@@ -59,4 +59,22 @@ public class Wallet {
         return quantity;
     }
 
+    public double computeValue(Currency currency) {
+        return stocks.entrySet()
+                .stream()
+                .parallel()
+                .mapToDouble(
+                        entry -> getValueForStockIn(currency, entry))
+                .sum();
+    }
+
+    private Double getValueForStockIn(Currency currency, Map.Entry<String, Integer> e) {
+        return rateProvider.getRateIn(
+                currency,
+                new Stock(
+                        e.getValue(),
+                        e.getKey()
+                ))
+                * e.getValue();
+    }
 }

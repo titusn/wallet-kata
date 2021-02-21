@@ -2,6 +2,7 @@ import com.titusnachbauer.wallet.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -90,6 +91,13 @@ class WalletTest {
         wallet.add(new Stock(2, "STOCKWITHVALUEONE"));
         wallet.add(new Stock(3, "STOCKWITHVALUETWO"));
         assertEquals(0, wallet.getQuantity("THISISNOTINTHEWALLET"));
+    }
+
+    @Test
+    void givenWalletWhenCurrencyEURProvidedShouldCalculateValueInEUR() {
+        wallet.add(new Stock(5, "STOCKWITHVALUEONEEUR"));
+        wallet.add(new Stock(5, "STOCKWITHVALUETWOEUR"));
+        assertEquals(15.0, wallet.computeValue(Currency.getInstance("EUR")));
     }
 
 }
