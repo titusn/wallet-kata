@@ -3,6 +3,8 @@ package com.titusnachbauer.wallet;
 import java.util.Currency;
 
 public class MockRateProvider implements RateProvider {
+    public static final double USD_EUR_EXCHANGE_RATE = 1.21;
+
     @Override
     public double getRate(Stock stock) {
         switch (stock.getSymbol()) {
@@ -30,7 +32,7 @@ public class MockRateProvider implements RateProvider {
 
     private double convertTo(Currency currency, double value) {
         if (currency.getCurrencyCode().equals("USD")) {
-            return value / 1.21; //assume dollar -> eur for now
+            return value / USD_EUR_EXCHANGE_RATE;
         } else {
             throw new CurrencyNotFound(currency.getCurrencyCode());
         }

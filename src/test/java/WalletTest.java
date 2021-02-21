@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class WalletTest {
-    private RateProvider mockRateProvider = new MockRateProvider();
-    private Wallet wallet = new Wallet(mockRateProvider);
+    private final RateProvider mockRateProvider = new MockRateProvider();
+    private final Wallet wallet = new Wallet(mockRateProvider);
 
     @Test
     void givenNewStockItShouldHaveQuantityAndStockType() {
@@ -98,6 +98,13 @@ class WalletTest {
         wallet.add(new Stock(5, "STOCKWITHVALUEONEEUR"));
         wallet.add(new Stock(5, "STOCKWITHVALUETWOEUR"));
         assertEquals(15.0, wallet.computeValue(Currency.getInstance("EUR")));
+    }
+
+    @Test
+    void givenWalletWhenCurrencyUSDProvidedShouldCalculateValueInUSD() {
+        wallet.add(new Stock(5, "STOCKWITHVALUEONEEUR"));
+        wallet.add(new Stock(5, "STOCKWITHVALUETWOEUR"));
+        assertEquals(15.0/MockRateProvider.USD_EUR_EXCHANGE_RATE, wallet.computeValue(Currency.getInstance("USD")));
     }
 
 }

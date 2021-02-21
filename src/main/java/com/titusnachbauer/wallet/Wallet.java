@@ -25,24 +25,6 @@ public class Wallet {
         this.rateProvider = rateProvider;
     }
 
-    public double computeValue() {
-        return stocks.entrySet()
-                .stream()
-                .parallel()
-                .mapToDouble(
-                        this::getValueForStock)
-                .sum();
-    }
-
-    private double getValueForStock(Map.Entry<String, Integer> e) {
-        return rateProvider.getRate(
-                new Stock(
-                        e.getValue(),
-                        e.getKey()
-                ))
-                * e.getValue();
-    }
-
     public void add(Stock stock) {
         Integer currentQuantity;
         currentQuantity = this.stocks.putIfAbsent(stock.getSymbol(), stock.getQuantity());
@@ -59,6 +41,15 @@ public class Wallet {
         return quantity;
     }
 
+    public double computeValue() {
+        return stocks.entrySet()
+                .stream()
+                .parallel()
+                .mapToDouble(
+                        this::getValueForStock)
+                .sum();
+    }
+
     public double computeValue(Currency currency) {
         return stocks.entrySet()
                 .stream()
@@ -68,7 +59,16 @@ public class Wallet {
                 .sum();
     }
 
-    private Double getValueForStockIn(Currency currency, Map.Entry<String, Integer> e) {
+    private double getValueForStock(Map.Entry<String, Integer> e) {
+        return rateProvider.getRate(
+                new Stock(
+                        e.getValue(),
+                        e.getKey()
+                ))
+                * e.getValue();
+    }
+
+    private double getValueForStockIn(Currency currency, Map.Entry<String, Integer> e) {
         return rateProvider.getRateIn(
                 currency,
                 new Stock(
