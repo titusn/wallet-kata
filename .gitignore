@@ -2,3 +2,4 @@
 /.idea/
 *.iml
 /local.properties
+/src/test/java/PrivateTest.java
