@@ -17,7 +17,7 @@ class APIClientTest {
     }
 
     @Test
-    void givenStatusURLThenClientResponseShouldBeOK() throws Exception {
+    void givenInternetConnectivityAPIStatusShouldBeUp() throws Exception {
         Assertions.assertEquals("up", client.getAPIStatus().getStatus());
     }
 
