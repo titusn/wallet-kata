@@ -19,4 +19,14 @@ class WalletIntegrationTest {
         Exception e = assertThrows(TickerSymbolNotFound.class, wallet::computeValue);
         assertEquals("Could not find this ticker symbol: THISISNOTATICKERSYMBOL", e.getMessage());
     }
+
+    @Test
+    void givenComplexWalletWhenCalledShouldReturnCurrentValue() {
+        wallet.add(new Stock(140, "CE")); //Celanese
+        wallet.add(new Stock(20, "GOOG")); //Alphabet Class C
+        wallet.add(new Stock(40, "BRK.B")); //Berkshire Hathaway Class B
+        double value = wallet.computeValue();
+        assertTrue(value > 0.0);
+        System.out.println(value);
+    }
 }
