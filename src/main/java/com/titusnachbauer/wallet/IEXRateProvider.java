@@ -10,9 +10,9 @@ import java.util.Properties;
 
 public class IEXRateProvider implements RateProvider{
     private final Client client;
-    private Properties properties = new Properties();
 
     public IEXRateProvider() {
+        var properties = new Properties();
         try (FileInputStream file = new FileInputStream("local.properties")) {
             properties.load(file);
         } catch (IOException e) {
