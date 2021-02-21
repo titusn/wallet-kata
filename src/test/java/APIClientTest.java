@@ -28,4 +28,9 @@ class APIClientTest {
         Assertions.assertEquals("AAPL", quote.getSymbol());
         Assertions.assertTrue(quote.getLatestPrice() > 0.0);
     }
+
+    @Test
+    void givenNonExistingSymbolCliendShouldThrowExceptionWith404() {
+        Assertions.assertThrows(IOException.class, () -> client.getQuote("THISISNOTATICKERSYMBOL"));
+    }
 }
