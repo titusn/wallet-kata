@@ -43,4 +43,9 @@ public class IEXRateProvider implements RateProvider {
     public double getRateIn(Currency currency, Stock stock) {
         throw new NotImplemented();
     }
+
+    @Override
+    public double convertTo(Currency currency, double value) {
+        throw new NotImplementedException();
+    }
 }

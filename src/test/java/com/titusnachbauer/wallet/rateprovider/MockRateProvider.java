@@ -34,7 +34,8 @@ public class MockRateProvider implements RateProvider {
         }
     }
 
-    private double convertTo(Currency currency, double value) {
+    @Override
+    public double convertTo(Currency currency, double value) {
         if (currency.getCurrencyCode().equals("USD")) {
             return value / USD_EUR_EXCHANGE_RATE;
         } else {
