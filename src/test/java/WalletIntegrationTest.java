@@ -1,9 +1,7 @@
-import com.titusnachbauer.wallet.IEXRateProvider;
-import com.titusnachbauer.wallet.RateProvider;
-import com.titusnachbauer.wallet.Stock;
-import com.titusnachbauer.wallet.Wallet;
+import com.titusnachbauer.wallet.*;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class WalletIntegrationTest {
@@ -14,6 +12,12 @@ class WalletIntegrationTest {
     void givenWalletWithOneStockWhenCalledShouldReturnCurrentValue() {
         Wallet wallet = new Wallet(new Stock(2, "AAPL"), iexRateProvider);
         assertTrue(wallet.computeValue() > 0.0);
+    }
+
+    @Test
+    void givenWalletWithUnknownStockTypeWhenCalledShouldThrowTickerSymbolUnknown() {
+        wallet.add(new Stock(1, "THISISNOTATICKERSYMBOL"));
+        assertThrows(TickerSymbolNotFound.class, wallet::computeValue);
     }
 
 }
