@@ -1,5 +1,6 @@
 import com.titusnachbauer.client.Client;
 import com.titusnachbauer.service.QuoteDto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
@@ -32,6 +33,7 @@ class APIClientTest {
 
     @Test
     void givenNonExistingSymbolCliendShouldThrowExceptionWith404() {
-        assertThrows(IOException.class, () -> client.getQuote("THISISNOTATICKERSYMBOL"));
+        Exception exeption = assertThrows(IOException.class, () -> client.getQuote("THISISNOTATICKERSYMBOL"));
+        Assertions.assertTrue(exeption.getMessage().endsWith("404"));
     }
 }
