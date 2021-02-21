@@ -1,13 +1,16 @@
 package com.titusnachbauer.client;
 
 import com.titusnachbauer.service.QuoteDto;
+import org.jetbrains.annotations.Nullable;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 
+import static java.net.HttpURLConnection.HTTP_OK;
+
 public class Client {
-    public static final int HTTP_STATUS_OK = 200;
     public static final String BASE_URL = "https://cloud.iexapis.com/v1/";
     private final String publishToken;
     private final Retrofit retrofit = new Retrofit.Builder()
@@ -22,12 +25,8 @@ public class Client {
 
     public QuoteDto getQuote(String symbol) throws IOException {
         try {
-            retrofit2.Response<QuoteDto> response = iexService.getQuote(symbol, publishToken).execute();
-            if (response.code() == HTTP_STATUS_OK) {
-                return response.body();
-            } else {
-                throw new IOException("Server responded " + response.code());
-            }
+            Response<QuoteDto> response = iexService.getQuote(symbol, publishToken).execute();
+            return getResponseBody(response);
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
@@ -36,15 +35,20 @@ public class Client {
 
     public StatusDto getAPIStatus() throws IOException {
         try {
-            retrofit2.Response<StatusDto> response = iexService.getAPIStatus().execute();
-            if (response.code() == HTTP_STATUS_OK) {
-                return response.body();
-            } else {
-                throw new IOException("Server responded " + response.code());
-            }
+            Response<StatusDto> response = iexService.getAPIStatus().execute();
+            return getResponseBody(response);
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
+        }
+    }
+
+    @Nullable
+    private <T> T getResponseBody(Response<T> response) throws IOException {
+        if (response.code() == HTTP_OK) {
+            return response.body();
+        } else {
+            throw new IOException("Server responded " + response.code());
         }
     }
 }
