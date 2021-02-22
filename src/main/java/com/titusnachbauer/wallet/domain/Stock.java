@@ -1,4 +1,4 @@
-package com.titusnachbauer.wallet;
+package com.titusnachbauer.wallet.domain;
 
 public class Stock {
     private final String symbol;

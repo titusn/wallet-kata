@@ -1,10 +1,9 @@
-package com.titusnachbauer.wallet.provider;
+package com.titusnachbauer.wallet.rateprovider.iexservice;
 
-import com.titusnachbauer.wallet.Stock;
-import com.titusnachbauer.wallet.apiclient.APIClient;
+import com.titusnachbauer.wallet.domain.Stock;
 import com.titusnachbauer.wallet.exception.NotImplemented;
 import com.titusnachbauer.wallet.exception.TickerSymbolNotFound;
-import com.titusnachbauer.wallet.service.QuoteDto;
+import com.titusnachbauer.wallet.rateprovider.RateProvider;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,7 +11,7 @@ import java.util.Currency;
 import java.util.Objects;
 import java.util.Properties;
 
-public class IEXRateProvider implements RateProvider{
+public class IEXRateProvider implements RateProvider {
     private final APIClient apiClient;
 
     public IEXRateProvider() {

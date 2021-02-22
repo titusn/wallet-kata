@@ -1,8 +1,8 @@
-package com.titusnachbauer.wallet.service;
+package com.titusnachbauer.wallet.rateprovider.iexservice;
 
 import com.google.gson.annotations.SerializedName;
 
-public class QuoteDto implements Dto{
+class QuoteDto implements Dto{
     @SerializedName("symbol")
     private final String symbol;
 

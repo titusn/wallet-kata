@@ -1,8 +1,8 @@
-package com.titusnachbauer.wallet.service;
+package com.titusnachbauer.wallet.rateprovider.iexservice;
 
 import com.google.gson.annotations.SerializedName;
 
-public class StatusDto implements Dto {
+class StatusDto implements Dto {
     @SerializedName("status")
     private final String status;
 

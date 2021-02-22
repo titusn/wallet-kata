@@ -1,9 +1,5 @@
-package com.titusnachbauer.wallet.apiclient;
+package com.titusnachbauer.wallet.rateprovider.iexservice;
 
-import com.titusnachbauer.wallet.service.Dto;
-import com.titusnachbauer.wallet.service.IEXService;
-import com.titusnachbauer.wallet.service.QuoteDto;
-import com.titusnachbauer.wallet.service.StatusDto;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

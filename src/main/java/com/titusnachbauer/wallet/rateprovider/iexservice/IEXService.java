@@ -1,4 +1,4 @@
-package com.titusnachbauer.wallet.service;
+package com.titusnachbauer.wallet.rateprovider.iexservice;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
