@@ -1,4 +1,8 @@
-package com.titusnachbauer.wallet;
+package com.titusnachbauer.wallet.provider;
+
+import com.titusnachbauer.wallet.Stock;
+import com.titusnachbauer.wallet.exception.CurrencyNotFound;
+import com.titusnachbauer.wallet.exception.TickerSymbolNotFound;
 
 import java.util.Currency;
 

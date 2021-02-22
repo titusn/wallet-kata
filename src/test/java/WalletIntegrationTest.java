@@ -1,4 +1,7 @@
 import com.titusnachbauer.wallet.*;
+import com.titusnachbauer.wallet.exception.TickerSymbolNotFound;
+import com.titusnachbauer.wallet.provider.IEXRateProvider;
+import com.titusnachbauer.wallet.provider.RateProvider;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

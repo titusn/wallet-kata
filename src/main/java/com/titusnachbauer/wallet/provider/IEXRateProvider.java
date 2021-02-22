@@ -1,7 +1,10 @@
-package com.titusnachbauer.wallet;
+package com.titusnachbauer.wallet.provider;
 
-import com.titusnachbauer.client.Client;
-import com.titusnachbauer.service.QuoteDto;
+import com.titusnachbauer.wallet.Stock;
+import com.titusnachbauer.wallet.apiclient.APIClient;
+import com.titusnachbauer.wallet.exception.NotImplemented;
+import com.titusnachbauer.wallet.exception.TickerSymbolNotFound;
+import com.titusnachbauer.wallet.service.QuoteDto;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +13,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class IEXRateProvider implements RateProvider{
-    private final Client client;
+    private final APIClient apiClient;
 
     public IEXRateProvider() {
         var properties = new Properties();
@@ -19,14 +22,14 @@ public class IEXRateProvider implements RateProvider{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        client = new Client(properties.getProperty("token"));
+        apiClient = new APIClient(properties.getProperty("token"));
     }
 
     @Override
     public double getRate(Stock stock) {
         QuoteDto quote= null;
         try {
-            quote = client.getQuote(stock.getSymbol());
+            quote = apiClient.getQuote(stock.getSymbol());
         } catch (IOException e) {
             if (e.getMessage().endsWith("404")) {
                 throw new TickerSymbolNotFound(stock.getSymbol());
@@ -39,6 +42,6 @@ public class IEXRateProvider implements RateProvider{
 
     @Override
     public double getRateIn(Currency currency, Stock stock) {
-        throw new NotImplementedException();
+        throw new NotImplemented();
     }
 }

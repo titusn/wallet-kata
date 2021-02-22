@@ -1,4 +1,6 @@
-package com.titusnachbauer.wallet;
+package com.titusnachbauer.wallet.provider;
+
+import com.titusnachbauer.wallet.Stock;
 
 import java.util.Currency;
 

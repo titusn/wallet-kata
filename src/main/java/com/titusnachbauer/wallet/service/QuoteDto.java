@@ -1,4 +1,4 @@
-package com.titusnachbauer.service;
+package com.titusnachbauer.wallet.service;
 
 import com.google.gson.annotations.SerializedName;
 

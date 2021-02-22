@@ -1,5 +1,7 @@
 package com.titusnachbauer.wallet;
 
+import com.titusnachbauer.wallet.provider.RateProvider;
+
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;

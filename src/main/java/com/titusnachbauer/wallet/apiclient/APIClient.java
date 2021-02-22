@@ -1,7 +1,9 @@
-package com.titusnachbauer.client;
+package com.titusnachbauer.wallet.apiclient;
 
-import com.titusnachbauer.service.Dto;
-import com.titusnachbauer.service.QuoteDto;
+import com.titusnachbauer.wallet.service.Dto;
+import com.titusnachbauer.wallet.service.IEXService;
+import com.titusnachbauer.wallet.service.QuoteDto;
+import com.titusnachbauer.wallet.service.StatusDto;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -10,7 +12,7 @@ import java.io.IOException;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class Client {
+public class APIClient {
     public static final String BASE_URL = "https://cloud.iexapis.com/v1/";
     private final String publishToken;
     private final Retrofit retrofit = new Retrofit.Builder()
@@ -19,7 +21,7 @@ public class Client {
             .build();
     private final IEXService iexService = retrofit.create(IEXService.class);
 
-    public Client(String iexPublishToken) {
+    public APIClient(String iexPublishToken) {
         publishToken = iexPublishToken;
     }
 

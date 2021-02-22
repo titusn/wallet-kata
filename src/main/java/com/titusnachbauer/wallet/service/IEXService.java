@@ -1,6 +1,5 @@
-package com.titusnachbauer.client;
+package com.titusnachbauer.wallet.service;
 
-import com.titusnachbauer.service.QuoteDto;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

@@ -1,7 +1,6 @@
-package com.titusnachbauer.client;
+package com.titusnachbauer.wallet.service;
 
 import com.google.gson.annotations.SerializedName;
-import com.titusnachbauer.service.Dto;
 
 public class StatusDto implements Dto {
     @SerializedName("status")

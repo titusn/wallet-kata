@@ -1,4 +1,4 @@
-package com.titusnachbauer.wallet;
+package com.titusnachbauer.wallet.exception;
 
 public class TickerSymbolNotFound extends RuntimeException {
     public TickerSymbolNotFound(String symbol) {

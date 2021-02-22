@@ -1,5 +1,5 @@
-import com.titusnachbauer.client.Client;
-import com.titusnachbauer.service.QuoteDto;
+import com.titusnachbauer.wallet.apiclient.APIClient;
+import com.titusnachbauer.wallet.service.QuoteDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,23 +9,23 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class APIClientTest {
+class APIClientIntegrationTest {
     Properties properties = new Properties();
-    Client client;
+    APIClient apiClient;
 
-    APIClientTest() throws IOException {
+    APIClientIntegrationTest() throws IOException {
         properties.load(new FileInputStream("local.properties"));
-        client = new Client(properties.getProperty("token"));
+        apiClient = new APIClient(properties.getProperty("token"));
     }
 
     @Test
     void givenInternetConnectivityAPIStatusShouldBeUp() throws Exception {
-        assertEquals("up", client.getAPIStatus().getStatus());
+        assertEquals("up", apiClient.getAPIStatus().getStatus());
     }
 
     @Test
     void givenExistingSymbolClientShouldReturnQuote() throws Exception {
-        QuoteDto quote = client.getQuote("AAPL");
+        QuoteDto quote = apiClient.getQuote("AAPL");
         assertNotNull(quote);
         assertEquals("AAPL", quote.getSymbol());
         assertTrue(quote.getLatestPrice() > 0.0);
@@ -33,7 +33,7 @@ class APIClientTest {
 
     @Test
     void givenNonExistingSymbolCliendShouldThrowExceptionWith404() {
-        Exception exeption = assertThrows(IOException.class, () -> client.getQuote("THISISNOTATICKERSYMBOL"));
+        Exception exeption = assertThrows(IOException.class, () -> apiClient.getQuote("THISISNOTATICKERSYMBOL"));
         Assertions.assertTrue(exeption.getMessage().endsWith("404"));
     }
 }
