@@ -26,7 +26,7 @@ public class IEXRateProvider implements RateProvider {
 
     @Override
     public double getRate(Stock stock) {
-        QuoteDto quote= null;
+        QuoteDto quote = null;
         try {
             quote = apiClient.getQuote(stock.getSymbol());
         } catch (IOException e) {
@@ -50,6 +50,6 @@ public class IEXRateProvider implements RateProvider {
 
     @Override
     public double convertTo(Currency currency, double value) {
-        throw new NotImplementedException();
+        throw new NotImplemented();
     }
 }
