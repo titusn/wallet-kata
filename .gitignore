@@ -2,4 +2,4 @@
 /.idea/
 *.iml
 /local.properties
-/src/test/java/PrivateTest.java
+/src/test/java/com/titusnachbauer/wallet/domain/PrivateTest.java
