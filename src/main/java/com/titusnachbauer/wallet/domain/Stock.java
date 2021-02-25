@@ -1,5 +1,7 @@
 package com.titusnachbauer.wallet.domain;
 
+import java.util.Currency;
+
 public class Stock {
     private final String symbol;
     private int quantity;
@@ -18,5 +20,13 @@ public class Stock {
 
     public void addQuantity(int quantity) {
         this.quantity += quantity;
+    }
+
+    public Currency getCurrency() {
+        if (getSymbol().endsWith("-NA") || getSymbol().endsWith("-GY")) {
+            return Currency.getInstance("EUR");
+        } else {
+            return Currency.getInstance("USD");
+        }
     }
 }
