@@ -44,12 +44,12 @@ public class IEXRateProvider implements RateProvider {
         if (currency.equals(stock.getCurrency())) {
             return getRate(stock);
         } else {
-            return convertTo(currency, getRate(stock));
+            return convertTo(currency, stock.getCurrency(), getRate(stock));
         }
     }
 
     @Override
-    public double convertTo(Currency currency, double value) {
+    public double convertTo(Currency to, Currency from, double value) {
         throw new NotImplemented();
     }
 }
