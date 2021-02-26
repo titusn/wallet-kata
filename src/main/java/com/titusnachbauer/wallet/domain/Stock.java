@@ -23,7 +23,7 @@ public class Stock {
     }
 
     public Currency getCurrency() {
-        if (getSymbol().endsWith("-NA") || getSymbol().endsWith("-GY")) {
+        if (getSymbol().endsWith("-NA") || getSymbol().endsWith("-GY") || getSymbol().endsWith("EUR")) {
             return Currency.getInstance("EUR");
         } else {
             return Currency.getInstance("USD");
