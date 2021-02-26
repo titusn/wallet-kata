@@ -1,7 +1,5 @@
 package com.titusnachbauer.wallet.domain;
 
-import com.titusnachbauer.wallet.domain.Stock;
-import com.titusnachbauer.wallet.domain.Wallet;
 import com.titusnachbauer.wallet.exception.TickerSymbolNotFound;
 import com.titusnachbauer.wallet.rateprovider.MockRateProvider;
 import com.titusnachbauer.wallet.rateprovider.RateProvider;
@@ -110,7 +108,14 @@ class WalletTest {
     void givenWalletWhenCurrencyUSDProvidedShouldCalculateValueInUSD() {
         wallet.add(new Stock(5, "STOCKWITHVALUEONEEUR"));
         wallet.add(new Stock(5, "STOCKWITHVALUETWOEUR"));
-        assertEquals(15.0/MockRateProvider.USD_EUR_EXCHANGE_RATE, wallet.computeValue(Currency.getInstance("USD")));
+        assertEquals(15.0 * MockRateProvider.EUR_USD_EXCHANGE_RATE, wallet.computeValue(Currency.getInstance("USD")));
+    }
+
+    @Test
+    void givenWalletWhenCurrencyEURAndStocksInUSDProvidedShouldCalculateValueInEUR() {
+        wallet.add(new Stock(5, "STOCKWITHVALUEONEEUR"));
+        wallet.add(new Stock(5, "STOCKWITHVALUETWOUSD"));
+        assertEquals(5 + 10.0 / MockRateProvider.EUR_USD_EXCHANGE_RATE, wallet.computeValue(Currency.getInstance("EUR")));
     }
 
 }
