@@ -2,7 +2,7 @@ package com.titusnachbauer.wallet.rateprovider.iexservice;
 
 import com.google.gson.annotations.SerializedName;
 
-class QuoteDto implements Dto{
+class QuoteDto implements IEXDto {
     @SerializedName("symbol")
     private final String symbol;
 

@@ -32,7 +32,7 @@ public class APIClient {
         return getResponseBody(response);
     }
 
-    private <T extends Dto> T getResponseBody(Response<T> response) throws IOException {
+    private <T extends IEXDto> T getResponseBody(Response<T> response) throws IOException {
         if (response.code() == HTTP_OK) {
             return response.body();
         } else {

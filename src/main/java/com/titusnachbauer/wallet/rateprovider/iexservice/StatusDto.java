@@ -2,7 +2,7 @@ package com.titusnachbauer.wallet.rateprovider.iexservice;
 
 import com.google.gson.annotations.SerializedName;
 
-class StatusDto implements Dto {
+class StatusDto implements IEXDto {
     @SerializedName("status")
     private final String status;
 
