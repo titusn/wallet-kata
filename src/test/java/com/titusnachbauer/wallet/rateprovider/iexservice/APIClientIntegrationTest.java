@@ -1,7 +1,5 @@
 package com.titusnachbauer.wallet.rateprovider.iexservice;
 
-import com.titusnachbauer.wallet.rateprovider.iexservice.APIClient;
-import com.titusnachbauer.wallet.rateprovider.iexservice.QuoteDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
