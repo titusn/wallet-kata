@@ -1,6 +1,5 @@
 package com.titusnachbauer.wallet.domain;
 
-import com.titusnachbauer.wallet.exception.NotImplemented;
 import com.titusnachbauer.wallet.rateprovider.RateProvider;
 
 import java.util.*;
@@ -69,5 +68,9 @@ public class Wallet {
 
     private double getValueForStockIn(Currency currency, Stock stock) {
         return rateProvider.getRateIn(currency, stock) * stock.getQuantity();
+    }
+
+    public List<Stock> entrySet() {
+        return stocks;
     }
 }

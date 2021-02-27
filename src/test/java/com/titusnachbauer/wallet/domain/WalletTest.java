@@ -1,8 +1,10 @@
 package com.titusnachbauer.wallet.domain;
 
 import com.titusnachbauer.wallet.exception.TickerSymbolNotFound;
+import com.titusnachbauer.wallet.rateprovider.CurrencyFinder;
 import com.titusnachbauer.wallet.rateprovider.MockRateProvider;
 import com.titusnachbauer.wallet.rateprovider.RateProvider;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -101,6 +103,7 @@ class WalletTest {
     void givenWalletWhenCurrencyEURProvidedShouldCalculateValueInEUR() {
         wallet.add(new Stock(5, "STOCKWITHVALUEONEEUR"));
         wallet.add(new Stock(5, "STOCKWITHVALUETWOEUR"));
+        CurrencyFinder.getInstance().addCurrencies(wallet);
         assertEquals(15.0, wallet.computeValue(Currency.getInstance("EUR")));
     }
 
@@ -108,6 +111,7 @@ class WalletTest {
     void givenWalletWhenCurrencyUSDProvidedShouldCalculateValueInUSD() {
         wallet.add(new Stock(5, "STOCKWITHVALUEONEEUR"));
         wallet.add(new Stock(5, "STOCKWITHVALUETWOEUR"));
+        CurrencyFinder.getInstance().addCurrencies(wallet);
         assertEquals(15.0 * MockRateProvider.EUR_USD_EXCHANGE_RATE, wallet.computeValue(Currency.getInstance("USD")));
     }
 
@@ -115,7 +119,7 @@ class WalletTest {
     void givenWalletWhenCurrencyEURAndStocksInUSDProvidedShouldCalculateValueInEUR() {
         wallet.add(new Stock(5, "STOCKWITHVALUEONEEUR"));
         wallet.add(new Stock(5, "STOCKWITHVALUETWOUSD"));
+        CurrencyFinder.getInstance().addCurrencies(wallet);
         assertEquals(5 + 10.0 / MockRateProvider.EUR_USD_EXCHANGE_RATE, wallet.computeValue(Currency.getInstance("EUR")));
     }
-
 }
