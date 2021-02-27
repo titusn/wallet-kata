@@ -1,5 +1,7 @@
 package com.titusnachbauer.wallet.domain;
 
+import com.titusnachbauer.wallet.exception.CurrencyNotSet;
+
 import java.util.Currency;
 
 public class Stock {
@@ -25,11 +27,7 @@ public class Stock {
 
     public Currency getCurrency() {
         if (currency == null) {
-            if (getSymbol().endsWith("-NA") || getSymbol().endsWith("-GY") || getSymbol().endsWith("EUR")) {
-                return Currency.getInstance("EUR");
-            } else {
-                return Currency.getInstance("USD");
-            }
+            throw new CurrencyNotSet("No currency set for stock: " + getSymbol());
         }
         return currency;
     }
