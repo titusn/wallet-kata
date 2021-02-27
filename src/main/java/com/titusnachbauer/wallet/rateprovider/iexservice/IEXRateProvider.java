@@ -4,6 +4,7 @@ import com.titusnachbauer.wallet.domain.Stock;
 import com.titusnachbauer.wallet.exception.ExchangeRateUnknown;
 import com.titusnachbauer.wallet.exception.TickerSymbolNotFound;
 import com.titusnachbauer.wallet.rateprovider.RateProvider;
+import com.titusnachbauer.wallet.rateprovider.currencyservice.CurrencyAPIClient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.Properties;
 
 public class IEXRateProvider implements RateProvider {
     private final APIClient apiClient;
+    private final CurrencyAPIClient currencyAPIClient = new CurrencyAPIClient();
 
     public IEXRateProvider() {
         var properties = new Properties();
@@ -55,9 +57,9 @@ public class IEXRateProvider implements RateProvider {
     }
 
     private double getExchangeRate(Currency from, Currency to) {
-        ExchangeRateDto exchangeRateDto = null;
+        double rate = 0;
         try {
-            exchangeRateDto = apiClient.getExchangeRate(from, to);
+             rate = currencyAPIClient.getExchangeRate(from, to);
         } catch (IOException e) {
             if (e.getMessage().endsWith("404")) {
                 throw new ExchangeRateUnknown(from, to);
@@ -65,6 +67,6 @@ public class IEXRateProvider implements RateProvider {
                 e.printStackTrace();
             }
         }
-        return Objects.requireNonNull(exchangeRateDto).getRate();
+        return rate;
     }
 }
