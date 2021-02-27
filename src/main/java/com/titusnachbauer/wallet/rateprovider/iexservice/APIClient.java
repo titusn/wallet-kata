@@ -5,6 +5,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.util.Currency;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
@@ -37,5 +38,10 @@ public class APIClient {
         } else {
             throw new IOException("Server responded " + response.code());
         }
+    }
+
+    public ExchangeRateDto getExchangeRate(Currency from, Currency to) throws IOException {
+        Response<ExchangeRateDto> response = iexService.getExchangeRate(from.getCurrencyCode() + to.getCurrencyCode(), publishToken).execute();
+        return getResponseBody(response);
     }
 }

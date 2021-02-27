@@ -1,7 +1,7 @@
 package com.titusnachbauer.wallet.rateprovider.iexservice;
 
 import com.titusnachbauer.wallet.domain.Stock;
-import com.titusnachbauer.wallet.exception.NotImplemented;
+import com.titusnachbauer.wallet.exception.ExchangeRateUnknown;
 import com.titusnachbauer.wallet.exception.TickerSymbolNotFound;
 import com.titusnachbauer.wallet.rateprovider.RateProvider;
 
@@ -50,6 +50,21 @@ public class IEXRateProvider implements RateProvider {
 
     @Override
     public double convertTo(Currency to, Currency from, double value) {
-        throw new NotImplemented();
+        double exchangeRate = getExchangeRate(from, to);
+        return value * exchangeRate;
+    }
+
+    private double getExchangeRate(Currency from, Currency to) {
+        ExchangeRateDto exchangeRateDto = null;
+        try {
+            exchangeRateDto = apiClient.getExchangeRate(from, to);
+        } catch (IOException e) {
+            if (e.getMessage().endsWith("404")) {
+                throw new ExchangeRateUnknown(from, to);
+            } else {
+                e.printStackTrace();
+            }
+        }
+        return Objects.requireNonNull(exchangeRateDto).getRate();
     }
 }
