@@ -21,9 +21,18 @@ public class IEXAPIClient {
         publishToken = iexPublishToken;
     }
 
-    public QuoteDto getQuote(String symbol) throws IOException {
-        Response<QuoteDto> response = iexService.getQuote(symbol, publishToken).execute();
-        return getResponseBody(response);
+    public QuoteDto getQuote(String symbol) {
+        return tryGetQuote(symbol);
+    }
+
+    private QuoteDto tryGetQuote(String symbol) {
+        try {
+            Response<QuoteDto> response = iexService.getQuote(symbol, publishToken).execute();
+            return getResponseBody(response);
+        }
+        catch (Exception e) {
+            throw new IEXException(e.getMessage());
+        }
     }
 
     public StatusDto getAPIStatus() throws IOException {
