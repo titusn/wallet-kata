@@ -60,7 +60,7 @@ public class IEXRateProvider implements RateProvider {
         double rate = 0;
         try {
              rate = currencyAPIClient.getExchangeRate(from, to);
-        } catch (IOException e) {
+        } catch (Exception e) {
             if (isMessagePageNotFound(e)) {
                 throw new ExchangeRateUnknown(from, to);
             } else {
