@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class APIClient {
+public class IEXAPIClient {
     public static final String BASE_URL = "https://cloud.iexapis.com/v1/";
     private final String publishToken;
     private final Retrofit retrofit = new Retrofit.Builder()
@@ -17,7 +17,7 @@ public class APIClient {
             .build();
     private final IEXService iexService = retrofit.create(IEXService.class);
 
-    public APIClient(String iexPublishToken) {
+    public IEXAPIClient(String iexPublishToken) {
         publishToken = iexPublishToken;
     }
 

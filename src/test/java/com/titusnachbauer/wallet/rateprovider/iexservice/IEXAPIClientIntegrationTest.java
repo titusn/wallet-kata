@@ -9,23 +9,23 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class APIClientIntegrationTest {
+class IEXAPIClientIntegrationTest {
     Properties properties = new Properties();
-    APIClient apiClient;
+    IEXAPIClient iexAPIClient;
 
-    APIClientIntegrationTest() throws IOException {
+    IEXAPIClientIntegrationTest() throws IOException {
         properties.load(new FileInputStream("local.properties"));
-        apiClient = new APIClient(properties.getProperty("token"));
+        iexAPIClient = new IEXAPIClient(properties.getProperty("token"));
     }
 
     @Test
     void givenInternetConnectivityAPIStatusShouldBeUp() throws Exception {
-        assertEquals("up", apiClient.getAPIStatus().getStatus());
+        assertEquals("up", iexAPIClient.getAPIStatus().getStatus());
     }
 
     @Test
     void givenExistingSymbolClientShouldReturnQuote() throws Exception {
-        QuoteDto quote = apiClient.getQuote("AAPL");
+        QuoteDto quote = iexAPIClient.getQuote("AAPL");
         assertNotNull(quote);
         assertEquals("AAPL", quote.getSymbol());
         assertTrue(quote.getLatestPrice() > 0.0);
@@ -33,7 +33,7 @@ class APIClientIntegrationTest {
 
     @Test
     void givenNonExistingSymbolCliendShouldThrowExceptionWith404() {
-        Exception exeption = assertThrows(IOException.class, () -> apiClient.getQuote("THISISNOTATICKERSYMBOL"));
+        Exception exeption = assertThrows(IOException.class, () -> iexAPIClient.getQuote("THISISNOTATICKERSYMBOL"));
         Assertions.assertTrue(exeption.getMessage().endsWith("404"));
     }
 }

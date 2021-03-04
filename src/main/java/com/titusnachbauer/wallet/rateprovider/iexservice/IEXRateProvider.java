@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class IEXRateProvider implements RateProvider {
-    private final APIClient apiClient;
+    private final IEXAPIClient iexAPIClient;
     private final CurrencyAPIClient currencyAPIClient = new CurrencyAPIClient();
 
     public IEXRateProvider() {
@@ -23,14 +23,14 @@ public class IEXRateProvider implements RateProvider {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        apiClient = new APIClient(properties.getProperty("token"));
+        iexAPIClient = new IEXAPIClient(properties.getProperty("token"));
     }
 
     @Override
     public double getRate(Stock stock) {
         QuoteDto quote = null;
         try {
-            quote = apiClient.getQuote(stock.getSymbol());
+            quote = iexAPIClient.getQuote(stock.getSymbol());
         } catch (IOException e) {
             if (e.getMessage().endsWith("404")) {
                 throw new TickerSymbolNotFound(stock.getSymbol());
