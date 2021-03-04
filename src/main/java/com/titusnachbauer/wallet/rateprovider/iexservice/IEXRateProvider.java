@@ -32,7 +32,7 @@ public class IEXRateProvider implements RateProvider {
         try {
             quote = iexAPIClient.getQuote(stock.getSymbol());
         } catch (Exception e) {
-            if (e.getMessage().endsWith("404")) {
+            if (isMessagePageNotFound(e)) {
                 throw new TickerSymbolNotFound(stock.getSymbol());
             } else {
                 e.printStackTrace();
@@ -61,7 +61,7 @@ public class IEXRateProvider implements RateProvider {
         try {
              rate = currencyAPIClient.getExchangeRate(from, to);
         } catch (IOException e) {
-            if (e.getMessage().endsWith("404")) {
+            if (isMessagePageNotFound(e)) {
                 throw new ExchangeRateUnknown(from, to);
             } else {
                 e.printStackTrace();
@@ -69,4 +69,9 @@ public class IEXRateProvider implements RateProvider {
         }
         return rate;
     }
+
+    private boolean isMessagePageNotFound(Exception e) {
+        return e.getMessage().endsWith("404");
+    }
+
 }
