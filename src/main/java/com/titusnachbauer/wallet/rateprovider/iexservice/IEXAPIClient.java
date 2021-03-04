@@ -35,9 +35,17 @@ public class IEXAPIClient {
         }
     }
 
-    public StatusDto getAPIStatus() throws IOException {
-        Response<StatusDto> response = iexService.getAPIStatus().execute();
-        return getResponseBody(response);
+    public StatusDto getAPIStatus() {
+        return tryGetStatus();
+    }
+
+    private StatusDto tryGetStatus() {
+        try {
+            Response<StatusDto> response = iexService.getAPIStatus().execute();
+            return getResponseBody(response);
+        } catch (Exception e) {
+            throw new IEXException(e.getMessage());
+        }
     }
 
     private <T extends IEXDto> T getResponseBody(Response<T> response) throws IOException {
