@@ -31,7 +31,7 @@ public class IEXRateProvider implements RateProvider {
         QuoteDto quote = null;
         try {
             quote = iexAPIClient.getQuote(stock.getSymbol());
-        } catch (Exception e) {
+        } catch (APIException e) {
             if (isMessagePageNotFound(e)) {
                 throw new TickerSymbolNotFound(stock.getSymbol());
             } else {
@@ -60,7 +60,7 @@ public class IEXRateProvider implements RateProvider {
         double rate = 0;
         try {
              rate = currencyAPIClient.getExchangeRate(from, to);
-        } catch (Exception e) {
+        } catch (APIException e) {
             if (isMessagePageNotFound(e)) {
                 throw new ExchangeRateUnknown(from, to);
             } else {

@@ -29,7 +29,7 @@ public class IEXAPIClient {
             return getResponseBody(response);
         }
         catch (Exception e) {
-            throw new IEXException(e.getMessage());
+            throw new APIException(e.getMessage());
         }
     }
 
@@ -42,7 +42,7 @@ public class IEXAPIClient {
             Response<StatusDto> response = iexService.getAPIStatus().execute();
             return getResponseBody(response);
         } catch (Exception e) {
-            throw new IEXException(e.getMessage());
+            throw new APIException(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class IEXAPIClient {
         if (response.code() == HTTP_OK) {
             return response.body();
         } else {
-            throw new IEXException("Server responded " + response.code());
+            throw new APIException("Server responded " + response.code());
         }
     }
 }

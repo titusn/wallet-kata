@@ -1,6 +1,7 @@
 package com.titusnachbauer.wallet.rateprovider.currencyservice;
 
 import com.titusnachbauer.wallet.exception.ExchangeRateUnknown;
+import com.titusnachbauer.wallet.rateprovider.iexservice.APIException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,12 +31,17 @@ public class CurrencyAPIClient {
         }
     }
 
-    public double getExchangeRate(Currency from, Currency to) throws IOException {
-        Response<ExchangeRateDto> response = currencyService.getExchangeRate().execute();
-        if (from.getCurrencyCode().equals("EUR")) {
-            return getResponseBody(response).getRate(to);
-        } else if (to.getCurrencyCode().equals("EUR")) {
-            return 1 / getResponseBody(response).getRate(from);
+    public double getExchangeRate(Currency from, Currency to) {
+        Response<ExchangeRateDto> response;
+        try {
+            response = currencyService.getExchangeRate().execute();
+            if (from.getCurrencyCode().equals("EUR")) {
+                return getResponseBody(response).getRate(to);
+            } else if (to.getCurrencyCode().equals("EUR")) {
+                return 1 / getResponseBody(response).getRate(from);
+            }
+        } catch (IOException e) {
+            throw new APIException(e.getMessage());
         }
         throw new ExchangeRateUnknown(to, from);
     }
