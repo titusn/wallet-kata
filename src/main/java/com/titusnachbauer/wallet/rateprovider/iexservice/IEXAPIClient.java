@@ -4,8 +4,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.io.IOException;
-
 import static java.net.HttpURLConnection.HTTP_OK;
 
 public class IEXAPIClient {
@@ -48,11 +46,11 @@ public class IEXAPIClient {
         }
     }
 
-    private <T extends IEXDto> T getResponseBody(Response<T> response) throws IOException {
+    private <T extends IEXDto> T getResponseBody(Response<T> response) {
         if (response.code() == HTTP_OK) {
             return response.body();
         } else {
-            throw new IOException("Server responded " + response.code());
+            throw new IEXException("Server responded " + response.code());
         }
     }
 }
